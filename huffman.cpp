@@ -75,15 +75,13 @@ int main() {
 		throw;
 	}
 
-	int inc = 10000;
-
 	while (!nodes.empty() && nodes.size() > 1) {
 		Node* one = new Node(nodes.top());
 		nodes.pop();
 		Node* two = new Node(nodes.top());
 		nodes.pop();
 
-		Node x(++inc, one->freq + two->freq, one, two);
+		Node x(-1, one->freq + two->freq, one, two);
 		nodes.push(x);
 	}
 
