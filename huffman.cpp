@@ -4,36 +4,7 @@
 #include <queue>
 #include <string>
 #include <vector>
-
-struct Node {
-	Node(const Node& copy) {
-		this->char_code = copy.char_code;
-		this->freq = copy.freq;
-		this->left = copy.left;
-		this->right = copy.right;
-	}
-
-	Node(int char_code, int freq, Node* left = NULL, Node* right = NULL) {
-		if (freq == 0) {
-			std::cerr << "Frequency can't be zero" << std::endl;
-			throw;
-		}
-
-		this->char_code = char_code;
-		this->freq = freq;
-		this->left = left;
-		this->right = right;
-	};
-
-	bool operator >(const Node& y) const {
-		return this->freq > y.freq;
-	}
-
-	int char_code;
-	int freq;
-	Node* left;
-	Node* right;
-};
+#include "node.h"
 
 int traverseWrite(std::ofstream& outStream, Node* x, std::string code) {
 	int bytesWritten = 0;
@@ -85,11 +56,11 @@ int main() {
 		nodes.push(x);
 	}
 
-	Node huffman_head = nodes.top();
+	Node* huffman_head = new Node(nodes.top());
 	nodes.pop();
 
-	Node *x = &huffman_head;
+	std::cout << dumpHuffmanTree(huffman_head) << std::endl;
+	huffman_head->delete_all();
 
-	std::cout << dumpHuffmanTree(&huffman_head) << std::endl;
 	return 1;
 }
