@@ -62,5 +62,5 @@ int main() {
 	std::cout << dumpHuffmanTree(huffman_head) << std::endl;
 	huffman_head->delete_all();
 
-	return 1;
+	return 0;
 }

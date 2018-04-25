@@ -17,5 +17,5 @@ int main() {
 		std::cout << std::setw(8) << std::left << it->first << it->second << std::endl;
 	}
 
-	return 1;
+	return 0;
 }
