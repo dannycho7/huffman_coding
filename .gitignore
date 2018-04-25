@@ -1,3 +1,7 @@
+decode
+encode
+frequencies
+huffman
 codewords.txt
 reference
 *.out
