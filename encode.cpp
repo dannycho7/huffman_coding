@@ -1,22 +1,7 @@
 #include <bitset>
 #include <iostream>
-#include <fstream>
 #include <string>
-#include <sstream>
-#include <unordered_map>
-
-void generate_huffman_code_mapping(std::unordered_map<int, std::string>& huffman_codes, char* codewords_filepath) {
-	std::fstream file(codewords_filepath);
-	std::string linebuf;
-	while (std::getline(file, linebuf)) {
-		int char_code;
-		std::string huffman_code;
-		std::stringstream in(linebuf);
-		in >> char_code >> huffman_code;
-		huffman_codes[char_code] = huffman_code;
-	}
-	file.close();
-};
+#include "huffman_code_mapping.h"
 
 int main(int argc, char* argv[]) {
 	char c;
@@ -43,7 +28,7 @@ int main(int argc, char* argv[]) {
 				writeBuf++;
 
 			if (numBytesWriteBuf == bufSize) {
-				std::cout << std::bitset<bufSize>(writeBuf);
+				std::cout << (char) writeBuf;
 				writeBuf = 0;
 				numBytesWriteBuf = 0;
 			}
@@ -52,7 +37,7 @@ int main(int argc, char* argv[]) {
 
 	if (numBytesWriteBuf != 0) {
 		writeBuf <<= bufSize - numBytesWriteBuf;
-		std::cout << std::bitset<bufSize>(writeBuf);
+		std::cout << (char) writeBuf;
 		writeBuf = 0;
 		numBytesWriteBuf = 0;
 	}
