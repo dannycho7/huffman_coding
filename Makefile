@@ -13,4 +13,4 @@ huffman: huffman.cpp
 	g++ ./huffman.cpp -o ./huffman
 
 clean:
-	rm encode decode frequencies huffman
+	rm -f encode decode frequencies huffman
