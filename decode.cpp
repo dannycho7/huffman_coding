@@ -1,3 +1,4 @@
+#include <cstdio>
 #include <iostream>
 #include <string>
 #include "huffman_code_mapping.h"
@@ -14,27 +15,34 @@ int main(int argc, char* argv[]) {
 	generate_inverted_huffman_code_mapping(huffman_code_to_char_code, argv[1]);
 
 	std::string code = "";
-	int char_code = 0, bitsRead = 8; // set bitsRead to 8 so we can start with a read
+	int char_code = 0, bitsReadFromBuf = 0, bitsReadTotal = 0, numBitsInput;
 	bool done = false;
 
+	std::cin >> numBitsInput;
+
 	while (1) {
+		if (bitsReadTotal == numBitsInput) break;
+
 		while (huffman_code_to_char_code.find(code) == huffman_code_to_char_code.end()) {
-			if (bitsRead == 8) {
-				if ((c = getchar()) == EOF) {
+			if (bitsReadFromBuf == 8 || bitsReadTotal == 0) {
+				char_code = (int) getchar();
+				bitsReadFromBuf = 0;
+				
+				if (feof(stdin) != 0) {
+					std::cout << (int) c << std::endl;
 					done = true;
 					break;
-				}
-				char_code = (int) c;
-				bitsRead = 0;
+				}				
 			}
 
-			int mask = (1 << (7 - bitsRead));
+			int mask = (1 << (7 - bitsReadFromBuf));
 			if ((char_code & mask) == 0) {
 				code += "0";
 			} else {
 				code += "1";
 			}
-			bitsRead++;
+			bitsReadFromBuf++;
+			bitsReadTotal++;
 		}
 
 		if (done) break;

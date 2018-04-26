@@ -1,9 +1,11 @@
-#include <bitset>
+#include <cstdio>
 #include <iostream>
 #include <string>
+#include <vector>
 #include "huffman_code_mapping.h"
 
 int main(int argc, char* argv[]) {
+	std::vector<char> outputBuf;
 	char c;
 
 	if (argc != 2) {
@@ -17,8 +19,8 @@ int main(int argc, char* argv[]) {
 	const int bufSize = 8;
 	int numBytesWriteBuf = 0, writeBuf = 0;
 
-	while ((c = getchar()) != EOF) {
-		int char_code = (int) c;
+	while (feof(stdin) == 0) {
+		int char_code = (int) getchar();
 		std::string code = huffman_codes[char_code];
 
 		for (int i = 0; i < code.length(); i++) {
@@ -28,18 +30,25 @@ int main(int argc, char* argv[]) {
 				writeBuf++;
 
 			if (numBytesWriteBuf == bufSize) {
-				std::cout << (char) writeBuf;
+				outputBuf.push_back((char) writeBuf);
 				writeBuf = 0;
 				numBytesWriteBuf = 0;
 			}
 		}
 	}
 
+	const int numBits = outputBuf.size() * 8 + numBytesWriteBuf;
+	std::cout << numBits;
+
 	if (numBytesWriteBuf != 0) {
 		writeBuf <<= bufSize - numBytesWriteBuf;
-		std::cout << (char) writeBuf;
+		outputBuf.push_back((char) writeBuf);
 		writeBuf = 0;
 		numBytesWriteBuf = 0;
+	}
+
+	for (int i = 0; i < outputBuf.size(); i++) {
+		std::cout << outputBuf[i];
 	}
 
 	return 0;
