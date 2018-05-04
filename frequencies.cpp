@@ -5,12 +5,11 @@
 #include <string>
 
 int main() {
-	char c;
+	unsigned int c;
 	std::map<int, int> freq;
 
 	while ((c = getchar()) != EOF) {
-		int char_code = c;
-		freq[char_code]++;
+		freq[c]++;
 	}
 
 	for (std::map<int, int>::iterator it = freq.begin(); it != freq.end(); it++) {

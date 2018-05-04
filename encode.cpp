@@ -17,10 +17,9 @@ int main(int argc, char* argv[]) {
 	generate_huffman_code_mapping(huffman_codes, argv[1]);
 
 	const int bufSize = 8;
-	int numBytesWriteBuf = 0, writeBuf = 0;
+	int numBytesWriteBuf = 0, writeBuf = 0, char_code = 0;
 
-	while (feof(stdin) == 0) {
-		int char_code = (int) getchar();
+	while ((char_code = getchar()) != EOF) {
 		std::string code = huffman_codes[char_code];
 
 		for (int i = 0; i < code.length(); i++) {
